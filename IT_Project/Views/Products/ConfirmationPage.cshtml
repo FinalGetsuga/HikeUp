@@ -1,0 +1,30 @@
+﻿
+@{
+    ViewBag.Title = "ConfirmationPage";
+}
+
+<style>
+
+    #conf-page {
+        height: 100vh;
+        margin-top:15px;
+        text-align: center;
+    }
+
+    #conf-page a {
+        text-decoration: none;
+        color: #fff;
+    }
+
+</style>
+
+<div id="conf-page" class="container">
+    <h2>Checkout Confirmation</h2>
+    <div class="alert alert-success">
+        Your order has been placed successfully! Thank you for shopping with us.
+    </div>
+    <p>
+        @Html.ActionLink("Continue Shopping", "Index", "Products")
+    </p>
+</div>
+

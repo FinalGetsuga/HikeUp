@@ -1,0 +1,220 @@
+﻿@model IEnumerable<IT_Project.Models.Product>
+
+@{
+    ViewBag.Title = "Shirts";
+}
+
+<style>
+
+    .product-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 20px;
+        padding: 20px 0;
+    }
+
+    .product-card {
+        background: #fff;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        overflow: hidden;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .product-card .card-img-top {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .product-card .card-body {
+            padding: 15px;
+            text-align: center;
+        }
+
+        .product-card .card-title {
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .product-card .card-text {
+            font-size: 1.1rem;
+            font-weight: bold;
+            color: #007bff;
+        }
+
+    #product-color {
+        margin: 10px auto;
+        border: 1px solid white;
+    }
+
+        #product-color span {
+            position: absolute;
+            bottom: 17%;
+            right: 35%;
+            transform: translateX(20%);
+            padding: 5px;
+            color: white;
+            border-radius: 3px;
+            font-size: 14px;
+            opacity: 0;
+            transition: opacity 0.3s;
+            pointer-events: none;
+        }
+
+        #product-color:hover span {
+            opacity: 1;
+        }
+
+    .product-card .card-body a {
+        display: inline-block;
+        color: #007bff;
+        text-decoration: none;
+    }
+
+    .button-row {
+        display: flex;
+        margin-bottom: 5px;
+    }
+
+    .btn-edit,
+    .btn-delete {
+        flex: 1;
+        text-align: center;
+        border: none;
+        border-radius: 4px;
+        font-size: 0.9rem;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-edit {
+        background-color: #007bff;
+        padding: 8px 0;
+        margin-right: 10px;
+    }
+
+        .btn-edit:hover {
+            background-color: #0056b3;
+        }
+
+    .btn-delete {
+        background-color: #dc3545;
+    }
+
+        .btn-delete:hover {
+            background-color: #a71d2a;
+        }
+
+    .btn-add-to-cart {
+        display: block;
+        width: 100%;
+        padding: 10px 0;
+        text-align: center;
+        background-color: #28a745;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        text-decoration: none;
+        font-size: 1rem;
+        transition: background-color 0.3s ease;
+    }
+
+        .btn-add-to-cart:hover {
+            background-color: #218838;
+        }
+
+    a {
+        text-decoration: none;
+        color: #fff;
+    }
+
+    #jacket-index {
+        margin-top: 15px;
+        height: 100vh;
+    }
+</style>
+
+<div id="jacket-index" class="container">
+    <h2>Shirts</h2>
+
+    @if (User.IsInRole("Admin"))
+    {
+        <button id="btn-create" class="btn btn-success btn-outline-success" style="margin-bottom: 15px">
+            @Html.ActionLink("Create New", "Create")
+        </button>
+    }
+    <div class="product-grid">
+        @foreach (var item in Model)
+        {
+            <div class="product-card">
+                <a href="~/Products/Details/@item.Id">
+                    <form>
+                        <input type="hidden" name="id" value="@item.Id" />
+                        <div class="card">
+                            <img src="@item.ProductURL" class="card-img-top fixed-image-height" />
+                            <div class="card-body">
+                                <h5 class="card-title">@item.Name</h5>
+                                <p class="card-text">@item.Price€</p>
+
+                                <div id="product-color" style="width:30px; height: 30px; background-color: @item.Color">
+                                    <span>@item.Color</span>
+                                </div>
+
+                                @if (User.IsInRole("Admin"))
+                                {
+                                    <div class="button-row">
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.Id }, new { @class = "btn-edit" })
+                                        <button class="btn-delete js-delete" data-product-id="@item.Id">Delete</button>
+                                    </div>
+                                }
+
+                                @Html.ActionLink("Add to cart", "AddToCart", new { id = item.Id }, new { @class = "btn-add-to-cart" })
+
+                            </div>
+                        </div>
+                    </form>
+                </a>
+
+            </div>
+        }
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+
+            $(".js-delete").on("click", function (e) {
+                e.preventDefault();
+
+                var button = $(this);
+                var productId = button.attr("data-product-id");
+
+                bootbox.confirm("Are you sure you want to delete this product?", function (result) {
+                    if (result) {
+                        $.ajax({
+                            url: "/Products/Delete/" + productId,
+                            method: "GET",
+                            success: function () {
+                                button.closest(".product-card").fadeOut(300, function () {
+                                    $(this).remove();
+                                });
+                            },
+                            error: function (err) {
+                                console.log(err);
+                            }
+                        });
+                    }
+                });
+            });
+        });
+
+    </script>
+}
+

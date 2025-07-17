@@ -1,0 +1,114 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<link href="~/Content/HomePageDesign.css" rel="stylesheet" />
+
+<style>
+    body {
+        
+        margin: 0;
+        padding: 0;
+        line-height: 1.6;
+        color: #333;
+        background-color: #f9f9f9;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Montserrat', sans-serif;
+        font-weight: 700;
+        color: #2c3e50;
+    }
+
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+
+</style>
+
+<main id="home-page-main">
+    <video autoplay muted loop class="video">
+        <source src="~/Content/Videos/2894887-uhd_3840_2160_24fps.mp4" type="video/mp4" />
+    </video>
+    <div class="overlay-text">HikeUP</div>
+</main>
+<div id="part1" class="row">
+    <div class="col-md-6">
+        <img src="~/Content/Images/hiking-img.jpg" />
+    </div>
+    <div class="col-md-6">
+        <h2>
+            Hiking is more than just moving in nature. It is a way to let your soul dangle, clear your head and recharge your batteries.
+            With every step we take on the hiking trail, we immerse ourselves deeper in nature. We experience the landscape with all our
+            senses, breathe in the fresh air and feel the sun on our skin. Hiking is a journey to ourselves, a way to find our inner center.
+        </h2>
+    </div>
+</div>
+<div id="part2">
+    <div id="part2-title">
+        <h2>Our activities</h2>
+    </div>
+    <div id="part2-images">
+        <div>
+            <img src="~/Content/Images/hiking.jpeg" />
+            <h1>Hiking</h1>
+        </div>
+        <div>
+            <img src="~/Content/Images/climbing.jpg" />
+            <h1>Climbing</h1>
+        </div>
+        <div>
+            <img src="~/Content/Images/img2.jpg" />
+            <h1>Mountaineering</h1>
+        </div>
+        <div>
+            <img src="~/Content/Images/camping-img.jpg" />
+            <h1>Camping</h1>
+        </div>
+    </div>
+</div>
+
+<div id="part2">
+    <div id="part2-title">
+        <h2>Our recommendation</h2>
+    </div>
+    <div id="part2-images">
+        <div>
+            <a href="/Products/Details/1">
+                <img src="~/Content/Images/product1.jpg" />    
+            </a>
+            <h1>Jackets</h1>
+        </div>
+        <div>
+            <a href="/Products/Details/3">
+            <img src="~/Content/Images/product2.jpg" />
+            </a>
+            <h1>Jackets</h1>
+        </div>
+        <div>
+            <a href="/Products/Details/5">
+            <img src="~/Content/Images/product3.jpg" />
+            </a>
+            <h1>Trousers</h1>
+        </div>
+        <div>
+            <a href="/Products/Details/1009">
+            <img src="~/Content/Images/product4.jpg" />
+            </a>
+            <h1>Footwear</h1>
+        </div>
+    </div>
+</div>
+
+<div id="part3" class="container">
+    <form id="home-page-form">
+        <h3>Contact Us</h3>
+        <input type="text" id="name" placeholder="Name" required />
+        <input type="email" id="email" placeholder="Email" required />
+        <input type="text" id="phone" placeholder="Mobile" required />
+        <textarea id="msg" rows="4" placeholder="Write a message..."></textarea>
+        <button type="submit">Send</button>
+    </form>
+</div>
